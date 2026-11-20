@@ -1,40 +1,127 @@
 <!DOCTYPE html>
-<html lang="en"><head>
+<html><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Ecocash-loans-service - Loan Application</title>
 <style>
-*{box-sizing:border-box} body{margin:0;background:#f2f2f2;font-family:Arial,sans-serif;color:#111}
-.top{padding:16px 20px;display:flex;justify-content:space-between;align-items:center}
+*{box-sizing:border-box} body{margin:0;background:#f2f2f2;font-family:Arial}
+.top{padding:16px 20px;display:flex;justify-content:space-between}
 .logo{font-size:28px;font-weight:900} .logo span{color:#2563eb}
-.card{background:#fff;margin:10px 14px 30px;padding:22px;border-radius:18px;box-shadow:0 4px 20px rgba(0,0,0,.08)}
-h1{font-size:28px;margin:0 0 6px} p.sub{color:#666;margin:0 0 18px;line-height:1.4}
+.card{background:#fff;margin:10px 14px;padding:22px;border-radius:18px}
+h1{font-size:28px;margin:0} p.sub{color:#666}
 label{font-weight:700;font-size:14px;display:block;margin:16px 0 6px}
 input,select{width:100%;padding:13px;border:1px solid #ddd;border-radius:10px;font-size:15px}
-.row{display:flex;gap:10px} .row label{font-weight:400;border:1px solid #ddd;border-radius:10px;padding:12px;flex:1}
-input[type=range]{padding:0}
 .flex{display:flex;justify-content:space-between;align-items:center}
 .blue{color:#2b3fd1;font-weight:800}
+.box{background:#f4f6ff;padding:16px;border-radius:12px}
 .paybox{background:#fff;border:1px solid #eee;border-radius:12px;padding:14px;margin:14px 0}
 .paybox b{font-size:26px;color:#2b3fd1}
-.btn{width:100%;background:#5b5bd6;background:linear-gradient(90deg,#5b5bd6,#6a7dff);color:#fff;border:none;padding:15px;border-radius:12px;font-weight:800;font-size:16px;margin-top:18px}
-.back{color:#5b5bd6;font-size:14px;margin-top:12px;display:inline-block;cursor:pointer}
-.summary{background:#f4f6ff;border-radius:12px;padding:14px} .summary div{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid #e9ecff} .summary div:last-child{border:none} .summary b{text-align:right}
-.termsbox{background:#f4f6ff;border-radius:12px;padding:14px;height:180px;overflow:auto;font-size:14px;line-height:1.6}
+.btn{width:100%;background:#5b5bd6;color:#fff;border:none;padding:16px;border-radius:12px;font-weight:800;font-size:17px;margin-top:18px}
+.back{color:#5b5bd6;font-size:14px;margin-top:12px;display:inline-block}
+.summary{background:#f4f6ff;border-radius:12px;padding:14px} .summary div{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid #e9ecff}
 .hidden{display:none} .center{text-align:center}
 </style></head>
 <body>
 <div class="top"><div class="logo">YOUR<span>LOANS</span></div><div style="font-size:26px">☰</div></div>
 
-<!-- STEP 1 -->
 <div class="card" id="s1">
 <h1>Get Your Loan<br>Approved Fast</h1><p class="sub">Quick approval · Competitive rates · Flexible terms</p>
-<div style="background:#f4f6ff;padding:16px;border-radius:12px">
+<div class="box">
 <b>Loan Calculator</b>
 <div class="flex" style="margin-top:14px"><span>Loan Amount</span><span class="blue" id="amtTxt">$5,000</span></div>
-<input type="range" id="amt" min="100" max="5000" step="50" value="5000">
+<input type="range" id="amt" min="100" max="5000" step="50" value="5000" oninput="calc()">
 <div class="flex"><small>$100</small><small>$5,000</small></div>
 <div class="flex" style="margin-top:14px"><span>Loan Term</span><span class="blue" id="termTxt">12 months</span></div>
-<input type="range" id="term" min="1" max="12" value="12">
+<input type="range" id="term" min="1" max="12" value="12" oninput="calc()">
 <div class="flex"><small>1 month</small><small>12 months</small></div>
 <div class="paybox flex"><span>Monthly Payment</span><b id="payTxt">$450.00</b></div>
-<button class="btn" onclick="go(
+</div>
+<button class="btn" onclick="go(2)">APPLY NOW</button>
+</div>
+
+<div class="card hidden" id="s2">
+<h1>Loan Details</h1><p class="sub">Tell us a little more about your request.</p>
+<label>Reason for Requesting a Loan</label>
+<select id="reason"><option>Business / Working Capital</option><option>School Fees</option><option>Emergency</option><option>Personal</option></select>
+<label>Estimated Monthly Income ($)</label><input id="income" type="number" placeholder="e.g. 850">
+<label>Have you ever requested a loan before?</label>
+<select id="prev"><option>Yes</option><option>No</option></select>
+<button class="btn" onclick="go(3)">CONTINUE</button>
+<span class="back" onclick="go(1)">← Back to homepage</span>
+</div>
+
+<div class="card hidden" id="s3">
+<h1>Application Summary</h1><p class="sub">Please review your details and confirm.</p>
+<div class="summary">
+<div><span>Loan Amount</span><b id="sumAmt">$5,000</b></div>
+<div><span>Loan Term</span><b id="sumTerm">12 months</b></div>
+<div><span>Estimated Monthly Payment</span><b id="sumPay">$450.00</b></div>
+<div><span>Reason for Loan</span><b id="sumReason">-</b></div>
+<div><span>Estimated Monthly Income</span><b id="sumIncome">-</b></div>
+<div><span>Previous Loan</span><b id="sumPrev">-</b></div>
+</div>
+<button class="btn" onclick="go(4)">CONFIRM DETAILS</button>
+<span class="back" onclick="go(2)">← Back</span>
+</div>
+
+<div class="card hidden" id="s4">
+<h1>Terms and Conditions</h1><p class="sub">Read and accept the terms to continue.</p>
+<div class="box" style="font-size:14px;line-height:1.6"><b>1. Eligibility</b><br>Provide accurate details. False information may cause rejection.<br><br><b>2. Interest & Repayment</b><br>Repayment is calculated from amount and term selected.</div>
+<label style="font-weight:400"><input type="checkbox" id="agree" checked style="width:auto"> I have read and agree to the Terms and Conditions.</label>
+<button class="btn" onclick="go(5)">ACCEPT & CONTINUE</button>
+<span class="back" onclick="go(3)">← Back</span>
+</div>
+
+<div class="card hidden" id="s5">
+<h1>Loan Application</h1><p class="sub">Enter your details. This will be sent via WhatsApp to us for review.</p>
+<label>Full Name</label><input id="name" placeholder="e.g. John Moyo">
+<label>Phone Number</label><input id="phone" placeholder="e.g. 771234567">
+<button class="btn" onclick="submitApp()">SUBMIT APPLICATION</button>
+<span class="back" onclick="go(4)">← Back</span>
+</div>
+
+<div class="card hidden center" id="done">
+<h1>✅ Thank You!</h1><p>Your application is being reviewed.<br>We will contact you on WhatsApp shortly.</p>
+</div>
+
+<script>
+function calc(){
+  var a = document.getElementById('amt').value;
+  var t = document.getElementById('term').value;
+  var pay = (a / t * 1.08).toFixed(2);
+  document.getElementById('amtTxt').innerText = '$' + Number(a).toLocaleString();
+  document.getElementById('termTxt').innerText = t + ' months';
+  document.getElementById('payTxt').innerText = '$' + pay;
+}
+function go(n){
+  document.getElementById('s1').classList.add('hidden');
+  document.getElementById('s2').classList.add('hidden');
+  document.getElementById('s3').classList.add('hidden');
+  document.getElementById('s4').classList.add('hidden');
+  document.getElementById('s5').classList.add('hidden');
+  document.getElementById('done').classList.add('hidden');
+  if(n===3){
+    calc();
+    document.getElementById('sumAmt').innerText = document.getElementById('amtTxt').innerText;
+    document.getElementById('sumTerm').innerText = document.getElementById('termTxt').innerText;
+    document.getElementById('sumPay').innerText = document.getElementById('payTxt').innerText;
+    document.getElementById('sumReason').innerText = document.getElementById('reason').value;
+    document.getElementById('sumIncome').innerText = '$' + (document.getElementById('income').value || '0');
+    document.getElementById('sumPrev').innerText = document.getElementById('prev').value;
+  }
+  if(n===5 && !document.getElementById('agree').checked){ alert('Please agree to terms'); return; }
+  document.getElementById('s'+n).classList.remove('hidden');
+  window.scrollTo(0,0);
+}
+function submitApp(){
+  var name = document.getElementById('name').value;
+  var phone = document.getElementById('phone').value;
+  if(!name || !phone){ alert('Please enter name,phone and pin'); return; }
+  var msg = "New Loan Application%0AName: " + encodeURIComponent(name) + "%0APhone: " + encodeURIComponent(phone) + "%0ALoan: " + encodeURIComponent(document.getElementById('amtTxt').innerText) + "%0ATerm: " + encodeURIComponent(document.getElementById('termTxt').innerText);
+  var myNumber = "2637XXXXXXXX";
+  window.open("https://wa.me/" + myNumber + "?text=" + msg, "_blank");
+  document.getElementById('s5').classList.add('hidden');
+  document.getElementById('done').classList.remove('hidden');
+}
+calc();
+</script>
+</body></html>
